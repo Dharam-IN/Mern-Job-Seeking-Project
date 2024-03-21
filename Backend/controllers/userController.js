@@ -34,3 +34,44 @@ export const register = catchAsyncError(async (req, res, next) => {
     })
 
 })
+
+
+// LOGIN
+export const login = catchAsyncError(async (req, res, next) => {
+    const {email, password, role} = req.body;
+
+    if(!email || !password || !role){
+        return next(new ErrorHandler("Please Provide email, password, role", 400))
+    }
+
+    const user = await User.findOne({email}).select("+password");
+
+    if(!user){
+        return next(new ErrorHandler("Please Enter Valid Details LOGIN", 400));
+    }
+
+    const isPasswordMatched = await user.comparePassword(password);
+
+    if(!isPasswordMatched){
+        return next(new ErrorHandler("Please Enter Valid Details LOGIN", 400));
+    }
+
+    if(user.role !== role){
+        return next(new ErrorHandler("User with this role not found!", 400));
+    }
+
+    sendToken(user, 200, res, "User Loged In Successfully!");
+
+})
+
+
+// LOGED OUT USER
+export const logout = catchAsyncError(async(req, res, next) => {
+    res.status(201).cookie("token", "",{
+        httpOnly: true,
+        expires: new Date(Date.now())
+    }).json({
+        success: true,
+        message: "User Logged Out Successfully!"
+    })
+})
