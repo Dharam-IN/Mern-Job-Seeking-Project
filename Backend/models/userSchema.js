@@ -13,17 +13,18 @@ const userSchema = new mongoose.Schema({
     email:{
         type: String,
         required: [true, "Please Enter Your Email"],
-        validator: [validator.isEmail, "Please provide a valid email"]
+        validate: [validator.isEmail, "Please provide a valid email"]
     },
     phone:{
         type: Number,
         required: [true, "Please Enter Your Phone Number"]
     },
     password:{
-        type: Number,
+        type: String,
         required: [true, "Please Enter Your Password"],
-        minLength: [3, "Password must be contain at least 8 characters"],
-        maxLength: [30, "Password can't exceed 32 characters"]
+        minLength: [8, "Password must be contain at least 8 characters"],
+        maxLength: [30, "Password can't exceed 30 characters"],
+        select: false
     },
     role: {
         type: String,
@@ -60,3 +61,6 @@ userSchema.methods.getJWTToken = function(){
         expiresIn: process.env.JWT_EXPIRE
     })
 }
+
+// MODEL
+export const User = mongoose.model("user", userSchema)
