@@ -13,7 +13,7 @@ export const register = catchAsyncError(async (req, res, next) => {
 
     const isEmail = User.findOne({email});
 
-    if(isEmail){
+    if(isEmail.length > 0){
         return next(new ErrorHandler("This Email Allready Exists!"));
     }
 
