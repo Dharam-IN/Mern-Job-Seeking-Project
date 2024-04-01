@@ -1,7 +1,7 @@
 import { catchAsyncError } from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/error.js";
 import { Application } from "../models/applicationSchema.js";
-import cloudinary from 'cloudinary'
+// import cloudinary from 'cloudinary'
 import { Job } from "../models/jobSchema.js";
 
 export const employerGetAllApplications = catchAsyncError(async (req, res, next) => {
@@ -69,44 +69,45 @@ export const postApplication = catchAsyncError(async (req, res, next) => {
         return next(new ErrorHandler("Employer is not allowed to access this resoures", 400));
     }
 
-    if(!req.files || Object.keys(req.files).length === 0){
-        return next(new ErrorHandler("Resume File Required"))
-    }
+    // if(!req.files || Object.keys(req.files).length === 0){
+    //     return next(new ErrorHandler("Resume File Required"))
+    // }
 
-    const {resume} = req.files;
+    // const {resume} = req.files;
 
-    const allowedFormats = ['image/png', 'image/jpg', 'image/webp'];
+    // const allowedFormats = ['image/png', 'image/jpg', 'image/webp'];
 
-    if(!allowedFormats.includes(resume.mimetype)){
-        return next (new ErrorHandler("Invalid File type. please upload a PNG, JPG Or WEBP Format", 400))
-    }
+    // if(!allowedFormats.includes(resume.mimetype)){
+    //     return next (new ErrorHandler("Invalid File type. please upload a PNG, JPG Or WEBP Format", 400))
+    // }
     console.log("Before Cloudinary")
 
-    const cloudinaryResponse = await cloudinary.uploader.upload(
-        resume.tempFilePath
-    );
+    // const cloudinaryResponse = await cloudinary.uploader.upload(
+    //     resume.tempFilePath
+    // );
 
-    console.log(cloudinaryResponse)
+    // console.log(cloudinaryResponse)
 
-    if(!cloudinaryResponse || !cloudinaryResponse.error){
-        console.log("Cloudinary Error:", cloudinaryResponse.error || "Unknown Cloudinary Error");
-        return next(new ErrorHandler("Failed to upload resume", 500))
-    }
+    // if(!cloudinaryResponse || !cloudinaryResponse.error){
+    //     console.log("Cloudinary Error:", cloudinaryResponse.error || "Unknown Cloudinary Error");
+    //     return next(new ErrorHandler("Failed to upload resume", 500))
+    // }
     
     const {name, email, coverLetter, phone, address, jobId} = req.body;
 
-    console.log("after Cloudinary")
-
+    
     const applicantID = {
         user: req.user._id,
         role: "Job Seeker"
     };
-
+    
     if(!jobId){
         return next(new ErrorHandler("Job not Found!", 404))
     }
-    
+    console.log("India")
+    console.log(Job)
     const jobDetails = await Job.findById(jobId)
+    console.log("after Cloudinary")
 
     if(!jobDetails){
         return next(new ErrorHandler("Job Not Found", 404))
@@ -117,7 +118,7 @@ export const postApplication = catchAsyncError(async (req, res, next) => {
         role: "Employer"
     };
 
-    if(!name || !email || !coverLetter || !phone || !address || !applicantID || !employerID || !resume){
+    if(!name || !email || !coverLetter || !phone || !address || !applicantID || !employerID){
         return next(new ErrorHandler("Please Fill all fields", 400))
     }
 
@@ -128,11 +129,7 @@ export const postApplication = catchAsyncError(async (req, res, next) => {
         phone,
         address,
         applicantID,
-        employerID,
-        resume: {
-            public_id: cloudinaryResponse.public_id,
-            url: cloudinaryResponse.secure_url
-        }
+        employerID
     })
 
     res.status(200).json({
