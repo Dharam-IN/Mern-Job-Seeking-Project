@@ -11,7 +11,7 @@ export const register = catchAsyncError(async (req, res, next) => {
         return next( new ErrorHandler("Please Fill full registration form!"))
     }
 
-    const isEmail = User.findOne({email});
+    const isEmail = User.find({email});
 
     if(isEmail.length > 0){
         return next(new ErrorHandler("This Email Allready Exists!"));
