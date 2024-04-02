@@ -22,7 +22,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/v1/user/register",
+        "http://localhost:4000/api/v1/user/register",
         { name, phone, email, role, password },
         {
           headers: {
@@ -40,7 +40,6 @@ const Register = () => {
       setIsAuthorized(true);
     } catch (error) {
       toast.error(error.response.data.message);
-      console.log(error.response.data)
     }
   };
 
@@ -54,7 +53,7 @@ const Register = () => {
       <section className="authPage">
         <div className="container">
           <div className="header">
-            <img src="/JobJunctionDarkLogo.png" alt="logo" />
+            <img src="/JobZeelogo.png" alt="logo" />
             <h3>Create a new account</h3>
           </div>
           <form>
@@ -74,7 +73,7 @@ const Register = () => {
               <div>
                 <input
                   type="text"
-                  placeholder="Dharam"
+                  placeholder="Zeeshan"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
@@ -86,7 +85,7 @@ const Register = () => {
               <div>
                 <input
                   type="email"
-                  placeholder="dharam@gmail.com"
+                  placeholder="zk@gmail.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />

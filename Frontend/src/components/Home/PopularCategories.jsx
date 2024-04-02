@@ -10,7 +10,7 @@ import { FaReact } from "react-icons/fa";
 import { GiArtificialIntelligence } from "react-icons/gi";
 import { IoGameController } from "react-icons/io5";
 
-const PopularCategory = () => {
+const PopularCategories = () => {
   const categories = [
     {
       id: 1,
@@ -81,4 +81,4 @@ const PopularCategory = () => {
   );
 };
 
-export default PopularCategory;
+export default PopularCategories;

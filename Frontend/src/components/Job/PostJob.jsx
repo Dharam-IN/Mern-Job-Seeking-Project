@@ -10,8 +10,8 @@ const PostJob = () => {
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
   const [location, setLocation] = useState("");
-  const [saleryFrom, setSalaryFrom] = useState("");
-  const [saleryTo, setSalaryTo] = useState("");
+  const [salaryFrom, setSalaryFrom] = useState("");
+  const [salaryTo, setSalaryTo] = useState("");
   const [fixedSalary, setFixedSalary] = useState("");
   const [salaryType, setSalaryType] = useState("default");
 
@@ -31,7 +31,7 @@ const PostJob = () => {
     }
     await axios
       .post(
-        "http://localhost:5000/api/v1/job/post",
+        "http://localhost:4000/api/v1/job/post",
         fixedSalary.length >= 4
           ? {
               title,
@@ -49,8 +49,8 @@ const PostJob = () => {
               country,
               city,
               location,
-              saleryFrom,
-              saleryTo,
+              salaryFrom,
+              salaryTo,
             },
         {
           withCredentials: true,
@@ -158,13 +158,13 @@ const PostJob = () => {
                     <input
                       type="number"
                       placeholder="Salary From"
-                      value={saleryFrom}
+                      value={salaryFrom}
                       onChange={(e) => setSalaryFrom(e.target.value)}
                     />
                     <input
                       type="number"
                       placeholder="Salary To"
-                      value={saleryTo}
+                      value={salaryTo}
                       onChange={(e) => setSalaryTo(e.target.value)}
                     />
                   </div>

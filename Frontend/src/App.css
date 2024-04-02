@@ -96,10 +96,9 @@ p {
   font-size: 1.6rem;
 }
 .authPage .container .header img {
-  width: 200px;
+  width: 300px;
   height: 120px;
   margin: 0 auto;
-  object-fit: contain;
 }
 .authPage .container .header {
   text-align: center;
@@ -1151,7 +1150,7 @@ p {
 }
 nav {
   background: #18191c;
-  padding: 20px 20px;
+  padding: 0 20px;
 }
 nav .container {
   max-width: 1500px;
@@ -1161,10 +1160,8 @@ nav .container {
   justify-content: space-between;
 }
 nav .container .logo {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  background-color: #fff;
+  width: 120px;
+  height: 120px;
 }
 nav .container .logo img {
   width: 100%;

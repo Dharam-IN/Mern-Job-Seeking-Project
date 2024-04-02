@@ -1,32 +1,34 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import { Context } from '../../main';
-import axios from 'axios';
-
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { Context } from "../../main";
 const JobDetails = () => {
-  const {id} = useParams();
+  const { id } = useParams();
   const [job, setJob] = useState({});
   const navigateTo = useNavigate();
 
-  const {isAuthorized, user} = useContext(Context);
+  const { isAuthorized, user } = useContext(Context);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/v1/job/${id}`, {
-      withCredentials: true})
-      .then((res) => {
-        setJob(res.data.job)
-      }).catch((err) => {
-        console.log(err.response.data.message);
+    axios
+      .get(`http://localhost:4000/api/v1/job/${id}`, {
+        withCredentials: true,
       })
-  }, [])
+      .then((res) => {
+        setJob(res.data.job);
+      })
+      .catch((error) => {
+        navigateTo("/notfound");
+      });
+  }, []);
 
-  if(!isAuthorized){
-    navigateTo("/login")
+  if (!isAuthorized) {
+    navigateTo("/login");
   }
 
   return (
-    <>
-      <section className="jobDetail page">
+    <section className="jobDetail page">
       <div className="container">
         <h3>Job Details</h3>
         <div className="banner">
@@ -57,7 +59,7 @@ const JobDetails = () => {
               <span>{job.fixedSalary}</span>
             ) : (
               <span>
-                {job.saleryFrom} - {job.saleryTo}
+                {job.salaryFrom} - {job.salaryTo}
               </span>
             )}
           </p>
@@ -69,8 +71,7 @@ const JobDetails = () => {
         </div>
       </div>
     </section>
-    </>
-  )
-}
+  );
+};
 
-export default JobDetails
+export default JobDetails;
